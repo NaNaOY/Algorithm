@@ -1,7 +1,11 @@
 package com.company;
 
+import java.util.LinkedList;
+
 public class Main {
     public static void main(String[] args){
+//实验一
+/*
     System.out.println("Hello World!");
 
     SinglyLinkedList<Integer> linkedList=new SinglyLinkedList<Integer>();
@@ -29,5 +33,14 @@ public class Main {
     linkedList.print();
     System.out.println(linkedList.get(2));
     System.out.println(linkedList.length());
+    linkedList.clear();
+    linkedList.isEmpty();
+    System.out.println(linkedList.search(2));
+    */
+
+    //实验二
+    new Josephus(20,0,7);
+
     }
+
 }
