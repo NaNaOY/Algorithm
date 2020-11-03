@@ -14,9 +14,7 @@ public class Josephus {
         }
         System.out.println("Josephus("+n+","+start+"，"+distance+")");
         Node<String> front=list.head;
-        for(int i=0;front!=null&&i<start;i++){
-            front=front.next;
-        }
+
         list.print();
         while(n>1){
             for(int i=0;i<distance;i++){

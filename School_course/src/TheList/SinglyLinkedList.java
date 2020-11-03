@@ -29,6 +29,7 @@ public class SinglyLinkedList<T> {
         temp.next =node;
         }
     }
+
     //插入节点
     //index 插入链表的位置，从1开始
     //node  插入的节点
@@ -131,9 +132,12 @@ public class SinglyLinkedList<T> {
             }
             else{
                 temp=temp.next;
-            }
+                }
             }
         }
         return null;
     }
+
+
 }
+

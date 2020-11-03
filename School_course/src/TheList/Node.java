@@ -19,10 +19,7 @@ public class Node <T>{
     public Node(){
         this(null,null);
     }
-  /*  public String toString(){
-        return this.data.toString();
-    }
-    */
+
 }
 
 
