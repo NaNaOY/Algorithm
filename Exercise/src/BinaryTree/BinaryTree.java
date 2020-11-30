@@ -1,183 +1,121 @@
 package BinaryTree;
 
-public class BinaryTree implements Tree {
-    // 表示根节点
-    private Node root;
 
-    // 查找节点
-    public Node find(int key) {
-        Node current = root;
-        while (current != null) {
-            if (current.data > key) {// 当前值比查找值大，搜索左子树
-                current = current.leftChild;
-            } else if (current.data < key) {// 当前值比查找值小，搜索右子树
-                current = current.rightChild;
-            } else {
-                return current;
-            }
-        }
-        return null;// 遍历完整个树没找到，返回null
+import java.util.Stack;
+
+public class BinaryTree<T> {
+    public BinaryNode<T> root;
+    public BinaryTree() {
+        this.root = null;
     }
-
-    // 插入节点
-    public boolean insert(int data) {
-        Node newNode = new Node(data);
-        if (root == null) {// 当前树为空树，没有任何节点
-            root = newNode;
-            return true;
-        } else {
-            Node current = root;
-            Node parentNode = null;
-            while (current != null) {
-                parentNode = current;
-                if (current.data > data) {// 当前值比插入值大，搜索左子节点
-                    current = current.leftChild;
-                    if (current == null) {// 左子节点为空，直接将新值插入到该节点
-                        parentNode.leftChild = newNode;
-                        return true;
-                    }
-                } else {
-                    current = current.rightChild;
-                    if (current == null) {// 右子节点为空，直接将新值插入到该节点
-                        parentNode.rightChild = newNode;
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
+    public boolean isEmpty() {
+        return this.root == null;
     }
-
-    // 中序遍历
-    public void infixOrder(Node current) {
-        if (current != null) {
-            infixOrder(current.leftChild);
-            System.out.print(current.data + " ");
-            infixOrder(current.rightChild);
+    public void insert(T x) {
+        if(x != null)
+            this.root = new BinaryNode<T>(x, this.root, null);
+    }
+    public BinaryNode<T> insert(BinaryNode<T> p, boolean left, T x){
+        if(x==null || p==null)
+            return null;
+        if(left)
+            return p.left = new BinaryNode<T>(x, p.left, null);
+        return p.right = new BinaryNode<T>(x, null, p.right);
+    }
+    public void remove(BinaryNode<T> p, boolean left) {
+        if(p!=null) {
+            if(left)
+                p.left = null;
+            else
+                p.right = null;
         }
     }
-
-    // 前序遍历
-    public void preOrder(Node current) {
-        if (current != null) {
-            System.out.print(current.data + " ");
-            infixOrder(current.leftChild);
-            infixOrder(current.rightChild);
+    public void clear() {
+        this.root = null;
+    }
+    //先根遍历二叉树
+    public void preorder() {
+        preorder(this.root);
+        System.out.println();
+    }
+    public void preorder(BinaryNode<T> p) {
+        if(p!=null) {
+            System.out.print(p.data.toString()+" ");
+            preorder(p.left);
+            preorder(p.right);
         }
     }
-
-    // 后序遍历
-    public void postOrder(Node current) {
-        if (current != null) {
-            infixOrder(current.leftChild);
-            infixOrder(current.rightChild);
-            System.out.print(current.data + " ");
+    //中根遍历二叉树
+    public void inorder() {
+        inorder(this.root);
+        System.out.println();
+    }
+    public void inorder(BinaryNode<T> p) {
+        if(p!= null) {
+            inorder(p.left);
+            System.out.print(p.data.toString()+" ");
+            inorder(p.right);
         }
     }
-
-    // 找到最大值
-    public Node findMax() {
-        Node current = root;
-        Node maxNode = current;
-        while (current != null) {
-            maxNode = current;
-            current = current.rightChild;
-        }
-        return maxNode;
+    //后根遍历
+    public void postorder() {
+        postorder(this.root);
+        System.out.println();
     }
-
-    // 找到最小值
-    public Node findMin() {
-        Node current = root;
-        Node minNode = current;
-        while (current != null) {
-            minNode = current;
-            current = current.leftChild;
+    public void postorder(BinaryNode<T> p) {
+        if(p!=null) {
+            postorder(p.left);
+            postorder(p.right);
+            System.out.print(p.data.toString()+" ");
         }
-        return minNode;
     }
-
-    @Override
-    public boolean delete(int key) {
-        Node current = root;
-        Node parent = root;
-        boolean isLeftChild = false;
-        // 查找删除值，找不到直接返回false
-        while (current.data != key) {
-            parent = current;
-            if (current.data > key) {
-                isLeftChild = true;
-                current = current.leftChild;
-            } else {
-                isLeftChild = false;
-                current = current.rightChild;
-            }
-            if (current == null) {
-                return false;
-            }
-        }
-        // 如果当前节点没有子节点
-        if (current.leftChild == null && current.rightChild == null) {
-            if (current == root) {
-                root = null;
-            } else if (isLeftChild) {
-                parent.leftChild = null;
-            } else {
-                parent.rightChild = null;
-            }
-            return true;
-
-            // 当前节点有一个子节点，右子节点
-        } else if (current.leftChild == null && current.rightChild != null) {
-            if (current == root) {
-                root = current.rightChild;
-            } else if (isLeftChild) {
-                parent.leftChild = current.rightChild;
-            } else {
-                parent.rightChild = current.rightChild;
-            }
-            return true;
-            // 当前节点有一个子节点，左子节点
-        } else if (current.leftChild != null && current.rightChild == null) {
-            if (current == root) {
-                root = current.leftChild;
-            } else if (isLeftChild) {
-                parent.leftChild = current.leftChild;
-            } else {
-                parent.rightChild = current.leftChild;
-            }
-            return true;
-        } else {
-            // 当前节点存在两个子节点
-            Node successor = getSuccessor(current);
-            if (current == root) {
-                successor = root;
-            } else if (isLeftChild) {
-                parent.leftChild = successor;
-            } else {
-                parent.rightChild = successor;
-            }
-            successor.leftChild = current.leftChild;
-        }
-        return false;
-
+    //先根构造二叉树
+    public BinaryTree(T[] prelist) {
+        this.root = create(prelist);
     }
-
-    public Node getSuccessor(Node delNode) {
-        Node successorParent = delNode;
-        Node successor = delNode;
-        Node current = delNode.rightChild;
-        while (current != null) {
-            successorParent = successor;
-            successor = current;
-            current = current.leftChild;
+    private int i = 0;
+    private BinaryNode<T> create(T[] prelist){
+        BinaryNode<T> p = null;
+        if(i<prelist.length) {
+            T elem = prelist[i++];
+            if(elem!=null) {
+                p = new BinaryNode<T>(elem);
+                p.left = create(prelist);
+                p.right = create(prelist);
+            }
         }
-        // 后继节点不是删除节点的右子节点，将后继节点替换删除节点
-        if (successor != delNode.rightChild) {
-            successorParent.leftChild = successor.rightChild;
-            successor.rightChild = delNode.rightChild;
+        return p;
+    }
+    public void preorderTraverse() {
+        Stack<BinaryNode<T>> stack = new LinkedStack<BinaryNode<T>>();
+        BinaryNode<T> p = this.root;
+        while(p!=null || !stack.isEmpty()) {
+            if(p!=null) {
+                System.out.print(p.data+" ");
+                stack.push(p);
+                p=p.left;
+            }
+            else {
+                System.out.print("^ ");
+                p=stack.pop();
+                p=p.right;
+            }
         }
-
-        return successor;
+        System.out.print("^ ");
+    }
+    public void inorderTraverse() {
+        Stack<BinaryNode<T>> stack = new LinkedStack<BinaryNode<T>>();
+        BinaryNode<T> p = this.root;
+        while(p!=null || !stack.isEmpty()) {
+            while(p!=null) {
+                stack.push(p);
+                p=p.left;
+            }
+            if(!stack.isEmpty()) {
+                p=stack.pop();
+                System.out.print(p.data+" ");
+                p=p.right;
+            }
+        }
     }
 }
