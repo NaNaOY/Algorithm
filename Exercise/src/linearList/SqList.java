@@ -1,6 +1,6 @@
 package linearList;
 
-public class SqList implements ILiist{
+public class SqList implements IList {
 
     private int[] listElem;//线性表存储空间
     private int curLen;//线性表当前长度

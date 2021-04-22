@@ -1,6 +1,6 @@
 package linearList;
 
-public interface ILiist {
+public interface IList {
     public void clear();// 置空表
 
     public boolean isEmpty();// 是否为空
