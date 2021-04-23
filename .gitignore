@@ -2,3 +2,4 @@ Debug
 *.exe
 x64
 .vs
+out
