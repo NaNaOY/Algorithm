@@ -1,8 +1,6 @@
 package The_experiment_1;
-
 import java.util.ArrayList;
 import java.util.List;
-
 /**
  * 大数双向链表
  * @author Dx666
@@ -11,7 +9,7 @@ import java.util.List;
  */
 class DoubleList {
     private DoubleNode head;
-    private String op;
+    private String op;       //符号
     private Integer length; // 链表中存储的数的长度
 
 
@@ -31,7 +29,6 @@ class DoubleList {
     public void setHead(DoubleNode head) {
         this.head = head;
     }
-
     /**
      * 返回头结点
      * @return

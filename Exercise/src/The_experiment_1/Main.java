@@ -39,7 +39,6 @@ public class Main {
         while(temp1 != null && temp2 != null) {
             // 当前节点减
             ansTemp = temp1.getNum() - temp2.getNum() - (flag ? 1 : 0);
-
             if(ansTemp < 0) {
                 // 是否需要借1
                 temp1.setNum(ansTemp + 10000);
