@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 /**
  * 大数双向链表
- * @author Dx666
+
  * @Description
  * @Date 2021/3/27 - 15:47
  */

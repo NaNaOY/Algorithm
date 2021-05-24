@@ -5,7 +5,6 @@ package The_experiment_1;
 import java.util.Scanner;
 
 /**
- * @author Dx666
  * @Description
  * @Date 2021/3/27 - 16:36
  */
@@ -161,7 +160,7 @@ public class Main {
                 } else if(high == 1) {
                     num1.setOp("+");
                     del(num1, num2);
-                } else if (high == -3){
+                } else if (high == -1){
                     num2.setOp("+");
                     del(num2, num1);
 

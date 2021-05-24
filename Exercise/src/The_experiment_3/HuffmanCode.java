@@ -1,4 +1,4 @@
-package The_experiment_2;
+package The_experiment_3;
 
 
 import java.io.*;
@@ -29,8 +29,57 @@ public class HuffmanCode {
 		System.out.println(code);
 		System.out.println("解码后为:");
 		System.out.println(decode(code));
-
+		System.out.println("--------对哈夫曼树序列化----------");
+		SerializableNode(head);
+		System.out.println("----------反序列化哈夫曼树------------");
+		DeserializeNode();
 	}
+	
+	/**
+	 * 序列化方法
+	 */
+	public static void SerializableNode(Node node) {
+		ObjectOutputStream oos = null;
+		try {
+			oos = new ObjectOutputStream(new FileOutputStream("HuffmanTree.dat"));
+			oos.writeObject(node);
+			// 写完之后要进行流数据更新
+			oos.flush();
+			System.out.println("序列化成功");
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(oos != null) oos.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	/**
+	 * 反序列化方法
+	 */
+	public static void DeserializeNode() {
+		ObjectInputStream ois = null;
+		try {
+			ois = new ObjectInputStream(new FileInputStream("HuffmanTree.dat"));
+			// 读取对象
+			Object o = ois.readObject();
+			System.out.println("反序列化成功");
+			Node node = (Node)o;
+			System.out.println(node.toString());
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(ois != null) ois.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
 	/**
 	 * 对哈夫曼编码进行解码
 	 * @param stringHuffmanCode
